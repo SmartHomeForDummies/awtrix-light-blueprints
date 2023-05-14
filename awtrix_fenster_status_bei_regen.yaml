@@ -9,7 +9,7 @@ blueprint:
   - Regen Sensor: Ein Regen Sensor (binary_senor), sollte keiner zur Verfügung stehnen, könnt ihr euch auf Basis\n
   einen Reggenmengen Sensors oder des Wetter Sensore inen Template Sensor erstellen.\n
   - Das verwendete ICON mit der Icon ID: 1819 findet verwendung. \U0001F4A7 Diese herunterladen und in water.gif umbennenen."
-
+  source_url: https://github.com/SmartHomeForDummies/awtrix-light-blueprints/blob/main/awtrix_fenster_status_bei_regen.yaml
   domain: automation
   author: SmartHome for Dummies
   input:
