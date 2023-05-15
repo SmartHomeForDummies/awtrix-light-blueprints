@@ -11,7 +11,7 @@ blueprint:
   - Das verwendete ICON mit der Icon ID: 1819 findet verwendung. \U0001F4A7 Diese herunterladen und in water.gif umbennenen."
   source_url: https://github.com/SmartHomeForDummies/awtrix-light-blueprints/blob/main/awtrix_fenster_status_bei_regen.yaml
   domain: automation
-  author: SmartHome for Dummies
+  author: SmartHome for Dummmies
   input:
     awtrix_display:
       name: Awtrix Display
