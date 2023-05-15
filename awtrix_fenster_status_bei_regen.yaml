@@ -65,7 +65,7 @@ blueprint:
           options:
             - label: "Globale Einstellung verwenden"
               value: "0"
-            - label: "Force Uppercase"
+            - label: "Alles in Großbuchstaben"
               value: "1"
             - label: "Anzeigen, wie eingegeben"
               value: "2"
