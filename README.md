@@ -4,6 +4,7 @@ Die App wird aktiviert sobald es beginnt zu regnen und mindestens 1 Fenster geö
 Oder Während es bereits regnet und mindestens ein Fenster geöffnet wird. Beendet wir die App,
 wenn es entweder aufhört zu regnen oder alle Fenster geschlossen werden während es noch regnet.
   # Voraussetzungen:
+  - Custom Firmware Awtrix Light https://blueforcer.github.io/awtrix-light/#/
   - Fenster Gruppe: Eine binary_sensor Gruppe wurde erstellt, welche alle zu überwachende Fenster beinhaltet.
   - Regen Sensor: Ein Regen Sensor (binary_sensor), sollte keiner zur Verfügung stehnen, könnt ihr euch auf Basis
   einen Reggenmengen Sensors oder des Wetter Sensore einen Template Sensor erstellen.
