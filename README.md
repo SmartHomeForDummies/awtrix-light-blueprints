@@ -16,4 +16,8 @@ wenn es entweder aufhört zu regnen oder alle Fenster geschlossen werden währen
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2FSmartHomeForDummies%2Fawtrix-light-blueprints%2Fblob%2Fmain%2Fawtrix_fenster_status_bei_regen.yaml)
 
+-------
+[![Donate with PayPal](https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-200px.png)
+](https://community.smarthome-for-dummies.de/donate)
+
 
