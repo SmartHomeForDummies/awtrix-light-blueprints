@@ -1,0 +1,177 @@
+blueprint:
+  name: Awtrix Benachritigungstext
+  description: "## Zeigt eine belibiege Benachrichtigung auf der
+    Awtrix/Ulanzi an. \n
+    ### *Voraussetzungen:*\n
+    - Input Text: Für die Text Benachrichtigung\n 
+    - Input Select: Für die Icon Auswahl\n
+    - Input Boolean: Zum Ein-und Auschalten der App"
+  source_url: https://github.com/SmartHomeForDummies/awtrix-light-blueprints/blob/main/awtrix_benachrichtigung.yaml
+  domain: automation
+  author: SmartHome for Dummies
+  input:
+    awtrix_display:
+      name: Awtrix Display
+      description: Wähle das Awtrix display aus.
+      selector:
+        device:
+          model: AWTRIX Light
+          multiple: false
+    toggle_helper:
+      name: Toggle Helfer
+      description: Wähle den Schalter Helfer aus, der die App ein- oder ausschaltet.
+      selector:
+        entity:
+          domain: 
+          - input_boolean
+          multiple: false
+    input_text_helper:
+      name: Input Text Helfer
+      description: Wähle einen Input Text Helfer aus, der den Benachrichtigungstext beinhaltet.
+      selector:
+        entity:
+          domain:
+          - input_text
+          multiple: false
+    input_icon_helper:
+      name: Input Select Helfer
+      description: Wähle einen Input Select Helfer, welcher das Icon definiert.
+      selector:
+        entity:
+          domain:
+          - input_select
+          multiple: false
+    push_icon:
+      name: Push Icon
+      description: Icon verhalten
+      selector:
+        select:
+          options:
+          - label: Das Icon bewegt sich nicht
+            value: '0'
+          - label: Das Icon bewegt sich mit dem Text und wird nicht mehr angezeigt
+            value: '1'
+          - label: Das Icon bewegt sich mit dem Text, erscheint aber wieder, wenn
+              der Text neu beginnt
+            value: '2'
+          mode: dropdown
+          sort: false
+          multiple: false
+          custom_value: false
+      default: '2'
+    text_case:
+      name: Text Ausgabe
+      description: Wählen aus, wie der Text angezeigt werden soll.
+      selector:
+        select:
+          options:
+          - label: Globale Einstellung verwenden
+            value: '0'
+          - label: Alles in Großbuchstaben
+            value: '1'
+          - label: Anzeigen, wie eingegeben
+            value: '2'
+          mode: dropdown
+          sort: false
+          multiple: false
+          custom_value: false
+      default: '0'
+    background_color:
+      name: Hintergrundfarbe
+      description: Wählen die Hintergrundfarbe aus.
+      selector:
+        color_rgb: {}
+      default:
+      - 0
+      - 0
+      - 0
+    text_color:
+      name: Textfarbe
+      description: Wähle die Textfarbe aus.
+      selector:
+        color_rgb: {}
+      default:
+      - 255
+      - 255
+      - 255
+    show_rainbow:
+      name: Regenbogenfarben
+      description: Soll die Benachrichtigung in Regenbogenfarben angezeigt werden?
+      selector:
+        boolean: {}
+      default: false
+    duration:
+      name: Dauer (in Sekunden)
+      description: Legt fest, wie lange die App angezeigt werden soll. 0 ist die globale
+        App-Zeit.
+      default: '0'
+    lifetime:
+      name: Lebensdauer (in Sekunden)
+      description: Legt fest, wie lange die App aktiv bleiben soll, bevor sie automatisch
+        aus dem App-Zyklus entfernt wird. 0 ist eine unendliche Lebensdauer.
+      default: '0'
+mode: queued
+trigger:
+- platform: state
+  entity_id: !input input_text_helper
+  id: 'On'
+- platform: state
+  entity_id: !input toggle_helper
+  from: 'off'
+  to: 'on'
+  id: 'On'
+- platform: state
+  entity_id: !input toggle_helper
+  from: 'on'
+  to: 'off'
+  id: 'Off'
+variables:
+  device_id: !input awtrix_display
+  my_display: '{{ iif( device_attr(device_id, ''name_by_user'') != none, device_attr(device_id,
+    ''name_by_user''), device_attr(device_id, ''name'') ) }}'
+  my_notify: !input input_text_helper
+  push_icon: !input push_icon
+  text_case: !input text_case
+  my_icon: !input input_icon_helper
+  show_rainbow: !input show_rainbow
+  background_color: !input background_color
+  text_color: !input text_color
+  my_duration: !input duration
+  my_text: "{{states(my_notify)}}"
+  my_lifetime: !input lifetime
+  app_name: '{{ my_notify | trim }}'
+action:
+- choose:
+  - conditions:
+    - condition: trigger
+      id: 'On'
+    - condition: state
+      entity_id: !input toggle_helper
+      state: 'on'
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: !input input_text_helper
+          state:
+            - unavailable
+            - unknown
+    sequence:
+    - service: mqtt.publish
+      data:
+        qos: 0
+        retain: false
+        topic: '{{my_display}}/custom/{{app_name}}'
+        payload: "{   \n  \"text\": \"{{ my_text }}\",\n  \"color\": {{text_color}},\n
+          \ \"background\": {{ background_color }},\n  \"icon\": \"{{ states(my_icon) }}\",\n  \"textCase\":
+          {{ text_case }},\n  \"pushIcon\": {{ push_icon }},\n  \"rainbow\": {{ iif(show_rainbow,
+          \"true\", \"false\") }},\n  \"duration\": {{ my_duration }},\n  \"lifetime\":
+          {{ my_lifetime }}\n}"
+  - conditions:
+    - condition: trigger
+      id: 'Off'
+    sequence:
+    - service: mqtt.publish
+      data:
+        qos: 0
+        retain: false
+        topic: '{{my_display}}/custom/{{app_name}}'
