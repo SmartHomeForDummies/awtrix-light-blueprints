@@ -5,7 +5,8 @@ blueprint:
     ### *Voraussetzungen:*\n
     - Input Text: Für die Text Benachrichtigung\n 
     - Input Select: Für die Icon Auswahl\n
-    - Input Boolean: Zum Ein-und Auschalten der App"
+    - Input Boolean: Zum Ein-und Auschalten der App"\n
+    ℹ️ Version: v.1.1"
   source_url: https://github.com/SmartHomeForDummies/awtrix-light-blueprints/blob/main/awtrix_benachrichtigung.yaml
   domain: automation
   author: SmartHome for Dummies
@@ -15,32 +16,34 @@ blueprint:
       description: Wähle das Awtrix display aus.
       selector:
         device:
-          model: AWTRIX Light
+          filter:
+            - manufacturer: Blueforcer
           multiple: false
     toggle_helper:
       name: Toggle Helfer
       description: Wähle den Schalter Helfer aus, der die App ein- oder ausschaltet.
       selector:
         entity:
-          domain: 
-          - input_boolean
           multiple: false
+          filter:
+            - domain: input_boolean
     input_text_helper:
       name: Input Text Helfer
-      description: Wähle einen Input Text Helfer aus, der den Benachrichtigungstext beinhaltet.
+      description: Wähle einen Input Text Helfer aus, der den Benachrichtigungstext
+        beinhaltet.
       selector:
         entity:
-          domain:
-          - input_text
           multiple: false
+          filter:
+            - domain: input_text
     input_icon_helper:
       name: Input Select Helfer
       description: Wähle einen Input Select Helfer, welcher das Icon definiert.
       selector:
         entity:
-          domain:
-          - input_select
           multiple: false
+          filter:
+            - domain: input_select      
     push_icon:
       name: Push Icon
       description: Icon verhalten
