@@ -5,7 +5,7 @@ blueprint:
     ### *Voraussetzungen:*\n
     - Input Text: Für die Text Benachrichtigung\n 
     - Input Select: Für die Icon Auswahl\n
-    - Input Boolean: Zum Ein-und Auschalten der App"\n
+    - Input Boolean: Zum Ein-und Auschalten der App\n
     ℹ️ Version: v.1.1"
   source_url: https://github.com/SmartHomeForDummies/awtrix-light-blueprints/blob/main/awtrix_benachrichtigung.yaml
   domain: automation
